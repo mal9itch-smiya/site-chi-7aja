@@ -1,0 +1,105 @@
+body {
+  background-size: cover;
+  /* باش تعمر كامل الصفحة */
+  background-color: #407ebc;
+}
+
+h1 {
+  text-align: center;
+}
+
+.sidebar {
+  width: 150px;
+  background-color: #074582;
+  height: 100vh;
+  padding-top: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.bar:hover {
+  background-color: #407ebc;
+}
+
+
+
+.three-boxes {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.box {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #000000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.box:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.box button {
+  display: flex;
+  margin: 10px auto 0 auto;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.box button:hover {
+  background-color: #074582c4;
+  border-radius: 8px;
+  /* الزوايا مدورة */
+  cursor: pointer;
+  /* اليد مني نحط الماوس */
+  box-shadow: 0 4px 6px #407ebc;
+  /* ظل خفيف */
+}
+
+.img2 {
+  display: block;
+  margin-left: 15%;
+  margin-right: 0;
+}
+
+.img22 {
+  display: block;
+  margin-left: 30%;
+  margin-right: 0;
+}
