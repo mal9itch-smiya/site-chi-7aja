@@ -1,5 +1,6 @@
 backend:
   name: git-gateway
+  repo: mal9itch-smiya/site-chi-7aja
   branch: main
 
 media_folder: "img"
