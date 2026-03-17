@@ -5,6 +5,9 @@ backend:
   base_url: https://oauth.netlifycms.org
   auth_endpoint: /auth
 
+media_folder: "img"
+public_folder: "/img"
+
 collections:
   - name: "products"
     label: "Products"
