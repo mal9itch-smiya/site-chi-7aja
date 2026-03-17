@@ -2,8 +2,8 @@ backend:
   name: github
   repo: mal9itch-smiya/site-chi-7aja
   branch: main
-media_folder: "img"
-public_folder: "/img"
+  base_url: https://oauth.netlifycms.org
+  auth_endpoint: /auth
 
 collections:
   - name: "products"
