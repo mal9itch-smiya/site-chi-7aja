@@ -2,6 +2,9 @@ backend:
   name: github
   repo: mal9itch-smiya/site-chi-7aja
   branch: main
+ base_url: https://api.netlify.com
+  auth_endpoint: /auth
+  client_id: Ov23liuzEftYC7CiU89e
   
 media_folder: "img"
 public_folder: "/img"
