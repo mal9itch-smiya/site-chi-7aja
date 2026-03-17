@@ -2,10 +2,8 @@ backend:
   name: github
   repo: mal9itch-smiya/site-chi-7aja
   branch: main
-  base_url: https://decap-cms-proxy-alpha.vercel.app # هادا هو الساروت الجديد
+  base_url: https://decap-cms-proxy-alpha.vercel.app
   auth_endpoint: /auth
-media_folder: "img"
-public_folder: "/img"
 
 collections:
   - name: "products"
