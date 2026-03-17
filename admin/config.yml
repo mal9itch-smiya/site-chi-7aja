@@ -2,10 +2,6 @@ backend:
   name: github
   repo: mal9itch-smiya/site-chi-7aja
   branch: main
-  base_url: https://decap-cms-proxy-alpha.vercel.app
-  auth_endpoint: /auth
-  client_id: Ov23liuzEftYC7ciu89e
-
 media_folder: "img"
 public_folder: "/img"
 
