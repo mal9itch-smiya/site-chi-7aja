@@ -10,40 +10,49 @@
     /* Popup Overlay */
     .popup-overlay {
       display: none;
-      /* Hidden by default */
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      /* Semi-transparent background */
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
+      transition: opacity 0.3s ease;
     }
 
-    /* Amazon Card Popup */
+    /* Glassmorphism Popup Card */
     .amazon-card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 25px 35px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px) saturate(200%);
+      -webkit-backdrop-filter: blur(12px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 28px;
+      padding: 30px 35px;
       width: 100%;
-      max-width: 350px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      color: #111;
+      max-width: 360px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.05);
+      color: #1d1d1f;
       text-align: left;
       position: relative;
+      transform: scale(0.95);
+      animation: iosScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes iosScaleUp {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .amazon-card h2 {
-      font-size: 28px;
-      font-weight: 500;
+      font-size: 26px;
+      font-weight: 700;
       margin-top: 0;
       margin-bottom: 25px;
-      color: #074582;
-      /* requested blue color */
+      color: #1d1d1f;
     }
 
     .input-group {
@@ -60,34 +69,35 @@
 
     .amazon-card input {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #a6a6a6;
-      border-radius: 4px;
-      font-size: 14px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 14px;
+      font-size: 15px;
       box-sizing: border-box;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .amazon-card input:focus {
       outline: none;
-      border-color: #074582;
-      box-shadow: 0 0 0 3px rgba(7, 69, 130, 0.2);
+      background: #fff;
+      border-color: #007aff;
+      box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
     }
 
     .btn-action {
       width: 100%;
-      background-color: #074582;
-      /* Primary blue button */
+      background-color: #007aff;
       color: white;
-      border: 1px solid #063566;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 15px;
-      font-weight: 500;
+      border: none;
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.2s;
+      margin-top: 15px;
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -95,12 +105,9 @@
     }
 
     .btn-action:hover {
-      background-color: #407ebc;
-      /* Hover blue */
-      border-color: #30659b;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      color: white;
-      transform: none;
+      background-color: #006ce0;
+      transform: scale(0.98);
+      box-shadow: 0 1px 4px rgba(0, 122, 255, 0.15);
     }
 
     .terms {
@@ -130,62 +137,80 @@
     .cancel-link {
       display: block;
       text-align: center;
-      font-size: 13px;
-      color: #074582;
+      font-size: 14px;
+      color: #007aff;
       text-decoration: none;
       cursor: pointer;
       background: none;
       border: none;
       width: 100%;
       margin-top: 5px;
-      padding: 5px;
+      padding: 8px;
+      font-weight: 500;
+      transition: color 0.2s;
     }
 
     .cancel-link:hover {
-      text-decoration: underline;
-      color: #cc0000;
-      /* Amazon Red for cancel hover */
-      background: none;
-      box-shadow: none;
+      color: #ff3b30;
     }
 
     /* Product Box Styling & Animation */
     .box {
-      /* Adding a background so the shadow is visible against any page color */
-      background-color: white;
-      border-radius: 8px;
-      padding: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, width 0.4s ease;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px) saturate(150%);
+      -webkit-backdrop-filter: blur(10px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), width 0.4s ease;
       box-sizing: border-box;
       width: 300px;
-      /* Fixed width to ensure alignment in grid view */
-      /* Ensures padding doesn't break layout */
     }
 
     .box:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.9);
     }
 
     .box img {
-      /* Animation for view switching */
-      transition: width 0.4s ease, height 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 100%;
+      height: 200px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 10px auto;
+    }
+    
+    .box:hover img {
+      transform: scale(1.03);
     }
 
-    /* Button styling to fit "Ajouter au panier" nicely */
+    /* Button styling to fit nicely */
     .box button:not(.btn-edit):not(.btn-delete) {
-      width: 90%;
-      margin: 10px auto 10px auto;
+      width: 100%;
+      margin: 15px auto 5px auto;
       display: flex;
       justify-content: center;
-      padding: 10px;
-      background-color: #074582;
+      padding: 12px;
+      background-color: #007aff;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 14px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .box button:not(.btn-edit):not(.btn-delete):hover {
+      background-color: #006ce0;
+      transform: scale(0.97);
+      box-shadow: 0 1px 4px rgba(0, 122, 255, 0.1);
     }
 
     /* This style was likely in the external CSS, adding it here to fix alignment */
@@ -206,13 +231,23 @@
     #searchInput {
       width: 60%;
       max-width: 500px;
-      padding: 12px 20px;
+      padding: 16px 24px;
       font-size: 16px;
-      border-radius: 25px;
-      border: 1px solid #ddd;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       outline: none;
-      transition: box-shadow 0.2s, border-color 0.2s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      color: #1d1d1f;
+    }
+
+    #searchInput:focus {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 15px rgba(0, 122, 255, 0.1);
+      transform: scale(1.02);
     }
 
     #home {
@@ -225,18 +260,35 @@
       position: absolute;
       right: 30px;
       top: 25px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      display: flex;
+      width: 105px;
+      justify-content: space-between;
+      box-sizing: border-box;
     }
 
     .view-switcher button {
-      background: none;
+      background: transparent;
       border: none;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 14px;
-      margin: 0 5px;
-      transition: background-color 0.2s, color 0.2s;
+      padding: 0;
+      width: 44px;
+      height: 38px;
+      border-radius: 14px;
+      cursor: pointer; 
+      margin: 0;
+      transition: all 0.3s ease;
+      color: #1d1d1f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
+    
     .view-switcher button span {
       margin-right: 0;
       font-weight: bold;
@@ -244,64 +296,72 @@
     }
 
     .view-switcher button:hover {
-      color: #555;
+      background: rgba(255, 255, 255, 0.6);
     }
 
     .view-switcher button.active {
-      background: none;
-      color: #074582;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      color: #007aff;
     }
 
     /* List View Styles */
     #product-container.list-view .three-boxes {
       flex-direction: column;
       align-items: center;
-      /* Center the boxes in the column */
     }
 
     #product-container.list-view .box {
       display: flex;
+      flex-direction: row;
       width: 90%;
-      /* Take more width */
       max-width: 700px;
-      /* Limit max width */
       text-align: left;
       align-items: center;
-      margin-bottom: 15px;
-      /* Space between list items */
+      margin-bottom: 25px;
+      min-height: 160px;
+      height: auto !important;
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: nowrap;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     #product-container.list-view .box img {
-      width: 150px;
-      height: 150px;
-      margin-right: 20px;
+      width: 120px;
+      height: 120px;
+      margin: 0;
       flex-shrink: 0;
-      /* Prevent image from shrinking */
+      object-fit: contain;
+      display: block;
+      border-radius: 12px;
     }
 
-    #product-container.list-view .box p {
+    #product-container.list-view .box p,
+    #product-container.list-view .box h3 {
       flex-grow: 1;
-      /* Allow text to take available space */
+      margin: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     #product-container.list-view .box button {
-      margin-left: auto;
-      /* Push button to the right */
+      margin: 0 0 0 auto;
       white-space: nowrap;
-      /* Prevent button text from wrapping */
       flex-shrink: 0;
       width: auto;
-      margin-top: 0;
     }
 
     /* No Results Message */
     .no-results {
       display: none;
-      /* Hidden by default */
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 500;
       color: #666;
       margin-top: 40px;
+      margin-bottom: 100px;
     }
 
     /* Cart Floating Button */
@@ -309,39 +369,46 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background-color: #074582;
-      color: white;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px) saturate(180%);
+      -webkit-backdrop-filter: blur(10px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      color: #1d1d1f;
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
+      width: 68px;
+      height: 68px;
       display: flex;
       justify-content: center;
       align-items: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       cursor: pointer;
       z-index: 1001;
       font-size: 28px;
-      transition: transform 0.2s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .cart-btn:hover {
-      transform: scale(1.1);
+      transform: scale(1.1) translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.9);
     }
 
     .cart-count {
       position: absolute;
-      top: -5px;
-      right: -5px;
-      background-color: #cc0000;
+      top: -2px;
+      right: -2px;
+      background-color: #ff3b30;
       color: white;
+      border: 2px solid white;
       border-radius: 50%;
       width: 24px;
       height: 24px;
-      font-size: 14px;
+      font-size: 13px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-weight: bold;
+      font-weight: 700;
+      box-shadow: 0 4px 8px rgba(255, 59, 48, 0.3);
     }
 
     /* Cart List in Popup */
@@ -384,9 +451,8 @@
     /* Basic Layout for Sidebar */
     .main-content {
       margin-left: 180px;
-      /* Space for the sidebar */
       padding: 20px;
-      transition: margin-left 0.3s;
+      transition: margin-left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .sidebar {
@@ -395,13 +461,16 @@
       top: 0;
       left: 0;
       height: 100%;
-      background-color: #074582;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(12px) saturate(200%);
+      -webkit-backdrop-filter: blur(12px) saturate(200%);
       padding-top: 20px;
       z-index: 100;
-      border-right: 1px solid #063566;
+      border-right: 1px solid rgba(255, 255, 255, 0.4);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: 1px 0 10px rgba(0,0,0,0.03);
     }
 
     .sidebar-top {
@@ -411,9 +480,63 @@
       align-items: center;
     }
 
+    .sidebar-top img {
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
     .sidebar-top ul {
       width: 100%;
       padding: 0;
+    }
+
+    /* Sidebar Filters */
+    .sidebar-filters {
+      padding: 15px;
+      margin-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    body[data-theme="dark"] .sidebar-filters {
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-filters h4 {
+      margin-top: 0; margin-bottom: 15px; font-size: 15px; color: #1d1d1f;
+    }
+    body[data-theme="dark"] .sidebar-filters h4 { color: #f5f5f7; }
+    .filter-group {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .filter-group label {
+      font-size: 12px;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #1d1d1f;
+    }
+    body[data-theme="dark"] .filter-group label { color: #bbb; }
+    .filter-group select, .filter-group input[type="number"] {
+      width: 100%;
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.5);
+      outline: none;
+      font-size: 12px;
+      color: #1d1d1f;
+      box-sizing: border-box;
+    }
+    body[data-theme="dark"] .filter-group select,
+    body[data-theme="dark"] .filter-group input[type="number"] {
+      background: rgba(0,0,0,0.3);
+      color: white;
+      border-color: rgba(255,255,255,0.1);
+    }
+    body[data-theme="dark"] .filter-group span {
+      color: white;
     }
 
     .social-links {
@@ -427,46 +550,52 @@
     .social-btn svg {
       width: 24px;
       height: 24px;
-      fill: white;
-      transition: fill 0.2s, transform 0.2s;
+      fill: #555;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .social-btn:hover svg {
-      transform: scale(1.1);
+      transform: scale(1.15) translateY(-2px);
     }
 
     .social-btn.facebook:hover svg {
       fill: #1877F2;
+      filter: drop-shadow(0 4px 6px rgba(24, 119, 242, 0.3));
     }
 
     .social-btn.instagram:hover svg {
       fill: #E1306C;
+      filter: drop-shadow(0 4px 6px rgba(225, 48, 108, 0.3));
     }
 
     .social-btn.tiktok:hover svg {
-      fill: #ff0050;
+      fill: #111;
+      filter: drop-shadow(0 4px 6px rgba(17, 17, 17, 0.3));
     }
 
     .social-btn.whatsapp:hover svg {
       fill: #25D366;
+      filter: drop-shadow(0 4px 6px rgba(37, 211, 102, 0.3));
     }
 
     /* Mobile Menu Toggle */
     .mobile-menu-btn {
       display: none;
-      font-size: 28px;
-      background-color: white;
-      border: 2px solid #074582;
-      border-radius: 5px;
-      color: #074582;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      color: #1d1d1f;
       cursor: pointer;
       position: fixed;
       top: 15px;
       left: 20px;
-      /* Moved slightly right for more spacing */
       z-index: 1002;
-      padding: 2px 10px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 6px 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+      transition: background 0.3s ease;
     }
 
     /* Admin Add Box Style */
@@ -476,17 +605,20 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      border: 3px dashed #074582;
-      background-color: #f4f8fb;
+      border: 3px dashed rgba(0, 122, 255, 0.5);
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
       min-height: 380px;
       box-shadow: none;
-      transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      border-radius: 24px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .admin-add-box:hover {
-      background-color: #e1edf7;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.7);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 122, 255, 0.15);
+      border-color: #007aff;
     }
 
     /* Admin Action Buttons */
@@ -499,30 +631,35 @@
 
     .admin-actions button {
       flex: 1;
-      padding: 8px;
+      padding: 10px;
       border: none;
-      border-radius: 4px;
+      border-radius: 12px;
       cursor: pointer;
-      font-size: 13px;
-      font-weight: bold;
+      font-size: 14px;
+      font-weight: 600;
       color: white;
-      transition: background-color 0.2s;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .btn-edit {
-      background-color: #f39c12;
+      background-color: #ff9500;
+      box-shadow: 0 4px 10px rgba(255, 149, 0, 0.3);
     }
 
     .btn-edit:hover {
-      background-color: #e67e22;
+      background-color: #e68600;
+      transform: scale(0.97);
     }
 
     .btn-delete {
-      background-color: #e74c3c;
+      background-color: #ff3b30;
+      box-shadow: 0 4px 10px rgba(255, 59, 48, 0.3);
     }
 
     .btn-delete:hover {
-      background-color: #c0392b;
+      background-color: #e0352b;
+      transform: scale(0.97);
     }
 
     /* Carousel Styles */
@@ -656,6 +793,181 @@
         right: 20px;
       }
     }
+
+    /* --- DARK THEME OVERRIDES (iOS 26 DARK) --- */
+    body[data-theme="dark"] .popup-overlay {
+      background: rgba(0, 0, 0, 0.6);
+    }
+    body[data-theme="dark"] .amazon-card {
+      background: rgba(30, 30, 30, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f5f5f7;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+    }
+    body[data-theme="dark"] .amazon-card h2 {
+      color: #ffffff;
+    }
+    body[data-theme="dark"] .amazon-card input {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+    body[data-theme="dark"] .amazon-card input:focus {
+      border-color: #0a84ff;
+      box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.2);
+    }
+    body[data-theme="dark"] .btn-action,
+    body[data-theme="dark"] .box button:not(.btn-edit):not(.btn-delete) {
+      background-color: #0a84ff;
+      color: white;
+      box-shadow: 0 2px 6px rgba(10, 132, 255, 0.2);
+    }
+    body[data-theme="dark"] .btn-action:hover,
+    body[data-theme="dark"] .box button:not(.btn-edit):not(.btn-delete):hover {
+      background-color: #007aff;
+    }
+    body[data-theme="dark"] .cancel-link {
+      color: #0a84ff;
+    }
+    body[data-theme="dark"] .cancel-link:hover {
+      color: #ff453a;
+    }
+    body[data-theme="dark"] .box {
+      background: rgba(20, 20, 20, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      color: #f5f5f7;
+    }
+    body[data-theme="dark"] .box:hover {
+      background: rgba(30, 30, 30, 0.65);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    body[data-theme="dark"] #searchInput {
+      background: rgba(20, 20, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f5f5f7;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    body[data-theme="dark"] #searchInput:focus {
+      background: rgba(30, 30, 30, 0.8);
+      box-shadow: 0 5px 15px rgba(10, 132, 255, 0.1);
+    }
+    body[data-theme="dark"] .no-results {
+      color: #f5f5f7;
+    }
+    body[data-theme="dark"] .cart-btn {
+      background: rgba(30, 30, 30, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f5f5f7;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+    body[data-theme="dark"] .cart-btn:hover {
+      background: rgba(40, 40, 40, 0.9);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    body[data-theme="dark"] .cart-count {
+      background-color: #ff453a;
+      border-color: #1d1d1f;
+    }
+    body[data-theme="dark"] .sidebar {
+      background: rgba(20, 20, 20, 0.6);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 1px 0 10px rgba(0,0,0,0.1);
+    }
+    body[data-theme="dark"] .sidebar ul li a {
+      color: #bbb;
+    }
+    body[data-theme="dark"] .sidebar ul li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    body[data-theme="dark"] .social-btn svg {
+      fill: #bbb;
+    }
+    body[data-theme="dark"] .social-btn:hover svg {
+      fill: #fff;
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+    }
+    body[data-theme="dark"] .view-switcher,
+    body[data-theme="dark"] .theme-switcher {
+      background: rgba(20, 20, 20, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    body[data-theme="dark"] .view-switcher button, 
+    body[data-theme="dark"] .theme-switcher button {
+      color: #bbb;
+    }
+    body[data-theme="dark"] .view-switcher button:hover,
+    body[data-theme="dark"] .theme-switcher button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    body[data-theme="dark"] .view-switcher button.active,
+    body[data-theme="dark"] .theme-switcher button.active {
+      background: rgba(40, 40, 40, 0.8);
+      color: #0a84ff;
+    }
+    body[data-theme="dark"] .mobile-menu-btn {
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f5f5f7;
+    }
+    body[data-theme="dark"] .admin-add-box {
+      background: rgba(20, 20, 20, 0.4);
+      border: 3px dashed rgba(10, 132, 255, 0.5);
+    }
+    body[data-theme="dark"] .admin-add-box:hover {
+      background: rgba(30, 30, 30, 0.6);
+      border-color: #0a84ff;
+    }
+    
+    /* Theme Switcher specific styles */
+    .theme-switcher {
+      position: absolute;
+      right: 30px;
+      top: 80px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      display: flex;
+      width: 105px;
+      justify-content: space-between;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+    .theme-switcher button {
+      background: transparent;
+      border: none;
+      padding: 0;
+      width: 44px;
+      height: 38px;
+      border-radius: 14px;
+      cursor: pointer; 
+      margin: 0;
+      transition: all 0.3s ease;
+      font-size: 18px;
+      color: #1d1d1f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .theme-switcher button:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+    .theme-switcher button.active {
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    @media (max-width: 768px) {
+      .theme-switcher {
+        top: 65px;
+        right: 15px;
+      }
+    }
   </style>
 </head>
 
@@ -671,6 +983,25 @@
             <h3>Services</h3>
           </a></li>
       </ul>
+      <div class="sidebar-filters">
+        <h4>🔍 Filtres</h4>
+        <div class="filter-group">
+          <label>Catégorie</label>
+          <select id="categoryFilter">
+            <option value="all">Toutes</option>
+            <option value="electronics">Électronique</option>
+            <option value="clothing">Vêtements</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Prix (DH)</label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="number" id="minPriceFilter" placeholder="Min" min="0">
+            <span style="color: #1d1d1f; font-weight: bold;">-</span>
+            <input type="number" id="maxPriceFilter" placeholder="Max" min="0">
+          </div>
+        </div>
+      </div>
     </div>
     <div class="social-links">
       <a href="https://www.facebook.com/" target="_blank" class="social-btn facebook" title="Facebook">
@@ -706,6 +1037,10 @@
     <div class="view-switcher">
       <button id="grid-view-btn" class="active" title="Vue Grille"><span>&#9783;</span></button>
       <button id="list-view-btn" title="Vue Liste"><span>&#9776;</span></button>
+    </div>
+    <div class="theme-switcher">
+      <button id="light-theme-btn" class="active" title="Mode Light (iOS 26)">☀️</button>
+      <button id="dark-theme-btn" title="Mode Sombre (Classic)">🌙</button>
     </div>
     <!-- Cart Floating Button -->
     <div class="cart-btn" id="openCartBtn">
@@ -1159,35 +1494,53 @@ ${itemsList}
       }
     });
 
-    // Search filter logic
+    // Search and Price filter logic
     const searchInput = document.getElementById('searchInput');
     const noResultsMessage = document.getElementById('no-results-message');
+    const minPriceFilter = document.getElementById('minPriceFilter');
+    const maxPriceFilter = document.getElementById('maxPriceFilter');
 
-    if (searchInput) {
-      searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        const allBoxes = document.querySelectorAll('#product-container .box');
-        let visibleCount = 0;
+    function applyFilters() {
+      const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+      const minPrice = minPriceFilter && minPriceFilter.value ? parseFloat(minPriceFilter.value) : 0;
+      const maxPrice = maxPriceFilter && maxPriceFilter.value ? parseFloat(maxPriceFilter.value) : Infinity;
 
-        allBoxes.forEach(box => {
-          const title = box.querySelector('h3').textContent.toLowerCase();
-          if (title.includes(searchTerm)) {
-            box.style.display = ''; // Reset to default display from stylesheet
-            visibleCount++;
-          } else {
-            box.style.display = 'none';
-          }
-        });
+      const allBoxes = document.querySelectorAll('#product-container .box');
+      let visibleCount = 0;
 
-        if (noResultsMessage) {
-          if (visibleCount === 0) {
-            noResultsMessage.style.display = 'block';
-          } else {
-            noResultsMessage.style.display = 'none';
-          }
+      allBoxes.forEach(box => {
+        const titleEl = box.querySelector('h3');
+        const priceEl = box.querySelector('h4');
+        
+        if (!titleEl || !priceEl) return;
+
+        const title = titleEl.textContent.toLowerCase();
+        const priceText = priceEl.textContent.replace(/[^0-9.]/g, '');
+        const price = parseFloat(priceText) || 0;
+
+        const matchesSearch = title.includes(searchTerm);
+        const matchesPrice = price >= minPrice && price <= maxPrice;
+
+        if (matchesSearch && matchesPrice) {
+          box.style.display = ''; 
+          visibleCount++;
+        } else {
+          box.style.display = 'none';
         }
       });
+
+      if (noResultsMessage) {
+        if (visibleCount === 0) {
+          noResultsMessage.style.display = 'block';
+        } else {
+          noResultsMessage.style.display = 'none';
+        }
+      }
     }
+
+    if (searchInput) searchInput.addEventListener('input', applyFilters);
+    if (minPriceFilter) minPriceFilter.addEventListener('input', applyFilters);
+    if (maxPriceFilter) maxPriceFilter.addEventListener('input', applyFilters);
 
     // View switcher logic
     const gridViewBtn = document.getElementById('grid-view-btn');
@@ -1252,6 +1605,32 @@ ${itemsList}
         dynamicProductsList.scrollBy({ left: boxWidth, behavior: 'smooth' });
       });
     }
+
+    // Theme Switcher Logic
+    const lightThemeBtn = document.getElementById('light-theme-btn');
+    const darkThemeBtn = document.getElementById('dark-theme-btn');
+
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      if(theme === 'dark') {
+        darkThemeBtn.classList.add('active');
+        lightThemeBtn.classList.remove('active');
+      } else {
+        lightThemeBtn.classList.add('active');
+        darkThemeBtn.classList.remove('active');
+      }
+    }
+
+    // Initialize theme based on saved preference or default to light
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+
+    if(lightThemeBtn && darkThemeBtn) {
+      lightThemeBtn.addEventListener('click', () => setTheme('light'));
+      darkThemeBtn.addEventListener('click', () => setTheme('dark'));
+    }
+
   </script>
 </body>
 
