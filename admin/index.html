@@ -1,12 +1,378 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #fdfbfb 0%, #eaedee 100%);
+      min-height: 100vh;
+    }
+
+    /* LOGIN */
+    #login-screen {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh;
+    }
+    .login-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 40px;
+      width: 100%; max-width: 360px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .login-card h2 { font-size: 24px; margin-bottom: 30px; color: #1d1d1f; }
+    .login-card input {
+      width: 100%; padding: 14px 16px; margin-bottom: 16px;
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 14px;
+      font-size: 15px; outline: none; background: rgba(255,255,255,0.7);
+      transition: all 0.3s;
+    }
+    .login-card input:focus { border-color: #007aff; box-shadow: 0 0 0 4px rgba(0,122,255,0.15); }
+    .btn-login {
+      width: 100%; padding: 14px; background: #007aff; color: white;
+      border: none; border-radius: 16px; font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-login:hover { background: #006ce0; transform: scale(0.98); }
+    .error-msg { color: #ff3b30; font-size: 13px; margin-top: 12px; }
+
+    /* DASHBOARD */
+    #dashboard { display: none; padding: 30px; max-width: 1100px; margin: 0 auto; }
+    .dash-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px; flex-wrap: wrap; gap: 15px;
+    }
+    .dash-header h1 { font-size: 28px; color: #1d1d1f; }
+    .btn-logout {
+      padding: 10px 20px; background: #ff3b30; color: white;
+      border: none; border-radius: 12px; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-logout:hover { background: #e0352b; }
+
+    /* ADD PRODUCT FORM */
+    .form-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .form-card h2 { font-size: 20px; margin-bottom: 20px; color: #1d1d1f; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-card label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #555; }
+    .form-card input, .form-card textarea {
+      width: 100%; padding: 12px 14px;
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 12px;
+      font-size: 14px; outline: none; background: rgba(255,255,255,0.7);
+      transition: all 0.3s; font-family: inherit;
+    }
+    .form-card input:focus, .form-card textarea:focus {
+      border-color: #007aff; box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+    }
+    .preview-img {
+      width: 100%; height: 160px; object-fit: contain;
+      border-radius: 12px; border: 1px solid rgba(0,0,0,0.08);
+      background: #f5f5f7; display: none; margin-top: 10px;
+    }
+    .btn-save {
+      margin-top: 20px; padding: 14px 30px; background: #007aff; color: white;
+      border: none; border-radius: 14px; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-save:hover { background: #006ce0; transform: scale(0.98); }
+    .btn-cancel-edit {
+      margin-top: 20px; margin-left: 12px; padding: 14px 20px;
+      background: #ff3b30; color: white; border: none; border-radius: 14px;
+      font-size: 15px; font-weight: 600; cursor: pointer; display: none;
+    }
+
+    /* PRODUCTS LIST */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .prod-card {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+    }
+    .prod-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+    .prod-card img {
+      width: 100%; height: 160px; object-fit: contain;
+      border-radius: 12px; background: #f5f5f7; margin-bottom: 12px;
+    }
+    .prod-card h3 { font-size: 16px; color: #1d1d1f; margin-bottom: 6px; }
+    .prod-card p { font-size: 13px; color: #666; margin-bottom: 6px; }
+    .prod-card .price { font-size: 16px; font-weight: 700; color: #007aff; margin-bottom: 14px; }
+    .card-actions { display: flex; gap: 10px; }
+    .btn-edit {
+      flex: 1; padding: 10px; background: #ff9500; color: white;
+      border: none; border-radius: 10px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-edit:hover { background: #e68600; }
+    .btn-delete {
+      flex: 1; padding: 10px; background: #ff3b30; color: white;
+      border: none; border-radius: 10px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .btn-delete:hover { background: #e0352b; }
+
+    .loading { text-align: center; padding: 40px; color: #666; font-size: 16px; }
+    .section-title { font-size: 20px; font-weight: 700; color: #1d1d1f; margin-bottom: 20px; }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      #dashboard { padding: 15px; }
+    }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <h2>🔐 Admin Panel</h2>
+    <input type="email" id="email-input" placeholder="Email" autocomplete="email"/>
+    <input type="password" id="pass-input" placeholder="Mot de passe" autocomplete="current-password"/>
+    <button class="btn-login" onclick="doLogin()">Se connecter</button>
+    <p class="error-msg" id="login-error"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="dash-header">
+    <h1>🛒 Gestion Produits</h1>
+    <button class="btn-logout" onclick="doLogout()">Déconnexion</button>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <h2 id="form-title">➕ Ajouter un produit</h2>
+    <div class="form-grid">
+      <div>
+        <label>Nom du produit</label>
+        <input type="text" id="f-name" placeholder="Ex: Casquette"/>
+      </div>
+      <div>
+        <label>Prix (DH)</label>
+        <input type="number" id="f-price" placeholder="Ex: 50"/>
+      </div>
+      <div class="full">
+        <label>Description (optionnel)</label>
+        <input type="text" id="f-desc" placeholder="Courte description..."/>
+      </div>
+      <div class="full">
+        <label>Image du produit</label>
+        <input type="file" id="f-image" accept="image/*" onchange="previewImage(this)"/>
+        <img id="img-preview" class="preview-img" alt="preview"/>
+      </div>
+    </div>
+    <button class="btn-save" onclick="saveProduct()">💾 Sauvegarder</button>
+    <button class="btn-cancel-edit" id="btn-cancel" onclick="cancelEdit()">✕ Annuler</button>
+  </div>
+
+  <!-- PRODUCTS -->
+  <p class="section-title">📦 Produits existants</p>
+  <div id="products-list" class="products-grid">
+    <div class="loading">Chargement...</div>
+  </div>
+</div>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getStorage, ref, uploadString, getDownloadURL }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWerYF6jQgPNihKHGvLe_Sl7wxnyKLDKk",
+    authDomain: "matjar-chi7aja.firebaseapp.com",
+    projectId: "matjar-chi7aja",
+    storageBucket: "matjar-chi7aja.firebasestorage.app",
+    messagingSenderId: "349140549883",
+    appId: "1:349140549883:web:081d460acf51fe2e3d305e"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  let editingId = null;
+  let currentImageBase64 = null;
+
+  // AUTH
+  window.doLogin = async () => {
+    const email = document.getElementById('email-input').value;
+    const pass = document.getElementById('pass-input').value;
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+    } catch(e) {
+      document.getElementById('login-error').textContent = 'Email ou mot de passe incorrect';
+    }
+  };
+
+  window.doLogout = () => signOut(auth);
+
+  onAuthStateChanged(auth, user => {
+    if(user) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadProducts();
+    } else {
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+    }
+  });
+
+  // IMAGE PREVIEW
+  window.previewImage = (input) => {
+    const file = input.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      currentImageBase64 = e.target.result;
+      const preview = document.getElementById('img-preview');
+      preview.src = currentImageBase64;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // SAVE PRODUCT
+  window.saveProduct = async () => {
+    const name = document.getElementById('f-name').value.trim();
+    const price = document.getElementById('f-price').value.trim();
+    const desc = document.getElementById('f-desc').value.trim();
+
+    if(!name || !price) { alert('Remplissez le nom et le prix svp'); return; }
+
+    const btn = document.querySelector('.btn-save');
+    btn.textContent = '⏳ Sauvegarde...';
+    btn.disabled = true;
+
+    try {
+      let imageUrl = 'img3.jpeg';
+
+      if(currentImageBase64) {
+        const imgRef = ref(storage, `products/${Date.now()}.jpg`);
+        await uploadString(imgRef, currentImageBase64, 'data_url');
+        imageUrl = await getDownloadURL(imgRef);
+      }
+
+      if(editingId) {
+        const updateData = { name, price, desc };
+        if(currentImageBase64) updateData.image = imageUrl;
+        await updateDoc(doc(db, 'products', editingId), updateData);
+      } else {
+        await addDoc(collection(db, 'products'), {
+          name, price, desc,
+          image: imageUrl,
+          createdAt: Date.now()
+        });
+      }
+
+      resetForm();
+      loadProducts();
+      alert('✅ Produit sauvegardé !');
+    } catch(e) {
+      alert('Erreur: ' + e.message);
+    }
+
+    btn.textContent = '💾 Sauvegarder';
+    btn.disabled = false;
+  };
+
+  // LOAD PRODUCTS
+  window.loadProducts = async () => {
+    const container = document.getElementById('products-list');
+    container.innerHTML = '<div class="loading">Chargement...</div>';
+    const snap = await getDocs(collection(db, 'products'));
+    if(snap.empty) { container.innerHTML = '<div class="loading">Aucun produit.</div>'; return; }
+    container.innerHTML = '';
+    snap.forEach(d => {
+      const p = d.data();
+      const card = document.createElement('div');
+      card.className = 'prod-card';
+      card.innerHTML = `
+        <img src="${p.image}" alt="${p.name}" onerror="this.src='img3.jpeg'"/>
+        <h3>${p.name}</h3>
+        <p>${p.desc || ''}</p>
+        <div class="price">${p.price} DH</div>
+        <div class="card-actions">
+          <button class="btn-edit" onclick="editProduct('${d.id}')">✏️ Modifier</button>
+          <button class="btn-delete" onclick="deleteProduct('${d.id}')">🗑️ Supprimer</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  };
+
+  // DELETE
+  window.deleteProduct = async (id) => {
+    if(!confirm('Supprimer ce produit ?')) return;
+    await deleteDoc(doc(db, 'products', id));
+    loadProducts();
+  };
+
+  // EDIT
+  window.editProduct = async (id) => {
+    const snap = await getDocs(collection(db, 'products'));
+    snap.forEach(d => {
+      if(d.id === id) {
+        const p = d.data();
+        document.getElementById('f-name').value = p.name;
+        document.getElementById('f-price').value = p.price;
+        document.getElementById('f-desc').value = p.desc || '';
+        const preview = document.getElementById('img-preview');
+        preview.src = p.image;
+        preview.style.display = 'block';
+        editingId = id;
+        currentImageBase64 = null;
+        document.getElementById('form-title').textContent = '✏️ Modifier le produit';
+        document.getElementById('btn-cancel').style.display = 'inline-block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  };
+
+  // CANCEL EDIT
+  window.cancelEdit = () => resetForm();
+
+  function resetForm() {
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-price').value = '';
+    document.getElementById('f-desc').value = '';
+    document.getElementById('f-image').value = '';
+    document.getElementById('img-preview').style.display = 'none';
+    document.getElementById('form-title').textContent = '➕ Ajouter un produit';
+    document.getElementById('btn-cancel').style.display = 'none';
+    editingId = null;
+    currentImageBase64 = null;
+  }
+</script>
 </body>
 </html>
