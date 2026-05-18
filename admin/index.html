@@ -204,9 +204,6 @@
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc }
     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  import { getStorage, ref, uploadString, getDownloadURL }
-    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
   const firebaseConfig = {
     apiKey: "AIzaSyBWerYF6jQgPNihKHGvLe_Sl7wxnyKLDKk",
     authDomain: "matjar-chi7aja.firebaseapp.com",
@@ -219,7 +216,6 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
-  const storage = getStorage(app);
 
   let editingId = null;
   let currentImageBase64 = null;
@@ -275,13 +271,7 @@
     btn.disabled = true;
 
     try {
-      let imageUrl = 'img3.jpeg';
-
-      if(currentImageBase64) {
-        const imgRef = ref(storage, `products/${Date.now()}.jpg`);
-        await uploadString(imgRef, currentImageBase64, 'data_url');
-        imageUrl = await getDownloadURL(imgRef);
-      }
+      let imageUrl = currentImageBase64 || 'img3.jpeg';
 
       if(editingId) {
         const updateData = { name, price, desc };
